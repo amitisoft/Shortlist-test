@@ -99,4 +99,24 @@ export class GetCandidateHandler {
             });
     }
 
+
+    static getCandidateHomePageInfo(httpContext:HttpContextImpl,injector:Injector) : void {
+
+        let pathParameters = httpContext.getPathParameters();
+        console.log(JSON.stringify(pathParameters));
+
+        injector.get(BookingFacade).getCandidateHomePageInfo(pathParameters)
+            .subscribe(result => {
+               console.log("myresult = ",result);
+        injector.get(BookingFacade).candidateTokenChecking(result,pathParameters)      //getAllBookings
+                    .subscribe(result1 => {
+                        console.log("myresult = ",result1);
+                        httpContext.ok(200, result1);
+                    });
+                },
+             err => {
+                httpContext.fail(err, 500);
+            });
+    }
+
 }

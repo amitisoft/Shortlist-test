@@ -206,7 +206,7 @@ functions:
     handler: handler.getQuestionByCategoryFunction
     events:
       - http:
-          path: api/getquestionbycategory
+          path: api/getquestionbycategory/Category/{Category}/LastqsnId/{LastqsnId}
           method: get
           cors: true
 
@@ -224,6 +224,14 @@ functions:
       - http:
           path: api/testlink
           method: post
+          cors: true
+
+  getCandidateHomePageInfo:
+    handler: handler.getCandidateHomePageInfo
+    events:
+      - http:
+          path: api/candidatehomePage/candidateinfo/{candidateinfo}
+          method: get
           cors: true
 
 #   createTestLinkFunction:
@@ -314,8 +322,8 @@ resources:
                     AttributeName: "candidateId"
                     KeyType: HASH
                 Projection: 
-                  #NonKeyAttributes: 
-                    #- "candidateId,category,dateofExam,jobPosition,bookingId"
+                  # NonKeyAttributes: 
+                  #   - "candidateId,category,DOE,bookingId"
                   ProjectionType: "ALL"
                 ProvisionedThroughput: 
                   ReadCapacityUnits: "1"

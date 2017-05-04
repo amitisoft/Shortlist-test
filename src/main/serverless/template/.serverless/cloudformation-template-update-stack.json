@@ -53,6 +53,12 @@
         "LogGroupName": "/aws/lambda/shortlist-template-dev-createTestLinkFunction"
       }
     },
+    "GetCandidateHomePageInfoLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shortlist-template-dev-getCandidateHomePageInfo"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -116,6 +122,9 @@
                     },
                     {
                       "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shortlist-template-dev-createTestLinkFunction:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shortlist-template-dev-getCandidateHomePageInfo:*"
                     }
                   ]
                 },
@@ -148,6 +157,9 @@
                     },
                     {
                       "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shortlist-template-dev-createTestLinkFunction:*:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shortlist-template-dev-getCandidateHomePageInfo:*:*"
                     }
                   ]
                 },
@@ -319,7 +331,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-getAllCandidatesFunction",
         "Handler": "handler.getAllCandidatesFunction",
@@ -347,14 +359,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetAllCandidatesFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "GetAllCandidatesFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllCandidatesFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "StartTestDashboardLambdaFunction": {
@@ -364,7 +376,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-startTestDashboard",
         "Handler": "handler.startTestDashboard",
@@ -392,14 +404,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "StartTestDashboardLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "StartTestDashboardLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "StartTestDashboardLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "GetAllQsnIdsFunctionLambdaFunction": {
@@ -409,7 +421,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-getAllQsnIdsFunction",
         "Handler": "handler.getAllQsnIdsFunction",
@@ -437,14 +449,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetAllQsnIdsFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "GetAllQsnIdsFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllQsnIdsFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "UpdateResultFunctionLambdaFunction": {
@@ -454,7 +466,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-updateResultFunction",
         "Handler": "handler.updateResultFunction",
@@ -482,14 +494,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateResultFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "UpdateResultFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateResultFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "CreateQuestionFunctionLambdaFunction": {
@@ -499,7 +511,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-createQuestionFunction",
         "Handler": "handler.createQuestionFunction",
@@ -527,14 +539,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateQuestionFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "CreateQuestionFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateQuestionFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "GetQuestionByCategoryFunctionLambdaFunction": {
@@ -544,7 +556,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-getQuestionByCategoryFunction",
         "Handler": "handler.getQuestionByCategoryFunction",
@@ -572,14 +584,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetQuestionByCategoryFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "GetQuestionByCategoryFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetQuestionByCategoryFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "CreateQsnPaperLambdaFunction": {
@@ -589,7 +601,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-createQsnPaper",
         "Handler": "handler.createQuestionPaperFunction",
@@ -617,14 +629,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateQsnPaperLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "CreateQsnPaperLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateQsnPaperLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "CreateTestLinkFunctionLambdaFunction": {
@@ -634,7 +646,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/shortlist-template/dev/1493815389449-2017-05-03T12:43:09.449Z/shortlist-template.zip"
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
         },
         "FunctionName": "shortlist-template-dev-createTestLinkFunction",
         "Handler": "handler.createTestLinkFunction",
@@ -662,14 +674,59 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateTestLinkFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY": {
+    "CreateTestLinkFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateTestLinkFunctionLambdaFunction"
         },
-        "CodeSha256": "48GG6K+VHGwid4lBHX0114ArRd/4E624UrQtceipLzY="
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
+      }
+    },
+    "GetCandidateHomePageInfoLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shortlist-template/dev/1493904345989-2017-05-04T13:25:45.989Z/shortlist-template.zip"
+        },
+        "FunctionName": "shortlist-template-dev-getCandidateHomePageInfo",
+        "Handler": "handler.getCandidateHomePageInfo",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "DYNAMODB_TABLE": "candidate",
+            "BOOKING_TABLE": "booking",
+            "QUESTION_LIST_TABLE": "question",
+            "QSNID_TABLE": "questionPaper",
+            "RESULT_TABLE": "Result"
+          }
+        }
+      },
+      "DependsOn": [
+        "GetCandidateHomePageInfoLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetCandidateHomePageInfoLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetCandidateHomePageInfoLambdaFunction"
+        },
+        "CodeSha256": "XVD9vWp9rZXo/0+A3gJX9l+Q2YUzDxETX7VJwbPnDyc="
       }
     },
     "ApiGatewayRestApi": {
@@ -789,6 +846,18 @@
         }
       }
     },
+    "ApiGatewayResourceApiCandidatehomepage": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApi"
+        },
+        "PathPart": "candidatehomePage",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
     "ApiGatewayResourceApiStarttestdashboardCandidateid": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -808,6 +877,30 @@
           "Ref": "ApiGatewayResourceApiAllqsnids"
         },
         "PathPart": "PaperId",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiGetquestionbycategoryCategory": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiGetquestionbycategory"
+        },
+        "PathPart": "Category",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiCandidatehomepageCandidateinfo": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiCandidatehomepage"
+        },
+        "PathPart": "candidateinfo",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -837,6 +930,30 @@
         }
       }
     },
+    "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiGetquestionbycategoryCategory"
+        },
+        "PathPart": "{Category}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiCandidatehomepageCandidateinfoCandidateinfoVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiCandidatehomepageCandidateinfo"
+        },
+        "PathPart": "{candidateinfo}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
     "ApiGatewayResourceApiStarttestdashboardCandidateidCandidateidVarBookingid": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -861,6 +978,18 @@
         }
       }
     },
+    "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVarLastqsnid": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVar"
+        },
+        "PathPart": "LastqsnId",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
     "ApiGatewayResourceApiStarttestdashboardCandidateidCandidateidVarBookingidBookingidVar": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -880,6 +1009,18 @@
           "Ref": "ApiGatewayResourceApiAllqsnidsPaperidPaperidVarQsnno"
         },
         "PathPart": "{QsnNo}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVarLastqsnid"
+        },
+        "PathPart": "{LastqsnId}",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -1163,7 +1304,7 @@
         }
       }
     },
-    "ApiGatewayMethodApiGetquestionbycategoryOptions": {
+    "ApiGatewayMethodApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVarOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -1202,7 +1343,7 @@
           ]
         },
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiGetquestionbycategory"
+          "Ref": "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -1295,6 +1436,52 @@
         },
         "ResourceId": {
           "Ref": "ApiGatewayResourceApiTestlink"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodApiCandidatehomepageCandidateinfoCandidateinfoVarOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Credentials": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
+                "method.response.header.Access-Control-Allow-Credentials": "'false'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiCandidatehomepageCandidateinfoCandidateinfoVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -1491,13 +1678,13 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayMethodApiGetquestionbycategoryGet": {
+    "ApiGatewayMethodApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVarGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiGetquestionbycategory"
+          "Ref": "ApiGatewayResourceApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -1605,7 +1792,45 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1493815389492": {
+    "ApiGatewayMethodApiCandidatehomepageCandidateinfoCandidateinfoVarGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceApiCandidatehomepageCandidateinfoCandidateinfoVar"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "GetCandidateHomePageInfoLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayDeployment1493904346028": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1619,9 +1844,10 @@
         "ApiGatewayMethodApiAllqsnidsPaperidPaperidVarQsnnoQsnnoVarCategoryCategoryVarGet",
         "ApiGatewayMethodApiUpdateresultPost",
         "ApiGatewayMethodApiCreatequestionPost",
-        "ApiGatewayMethodApiGetquestionbycategoryGet",
+        "ApiGatewayMethodApiGetquestionbycategoryCategoryCategoryVarLastqsnidLastqsnidVarGet",
         "ApiGatewayMethodApiQuestionpaperPost",
-        "ApiGatewayMethodApiTestlinkPost"
+        "ApiGatewayMethodApiTestlinkPost",
+        "ApiGatewayMethodApiCandidatehomepageCandidateinfoCandidateinfoVarGet"
       ]
     },
     "GetAllCandidatesFunctionLambdaPermissionApiGateway": {
@@ -1888,6 +2114,39 @@
         }
       }
     },
+    "GetCandidateHomePageInfoLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "GetCandidateHomePageInfoLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:aws:execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
     "candidate": {
       "Type": "AWS::DynamoDB::Table",
       "DeletionPolicy": "Retain",
@@ -2111,49 +2370,55 @@
     "GetAllCandidatesFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllCandidatesFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "GetAllCandidatesFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "StartTestDashboardLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "StartTestDashboardLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "StartTestDashboardLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "GetAllQsnIdsFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllQsnIdsFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "GetAllQsnIdsFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "UpdateResultFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateResultFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "UpdateResultFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "CreateQuestionFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateQuestionFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "CreateQuestionFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "GetQuestionByCategoryFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetQuestionByCategoryFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "GetQuestionByCategoryFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "CreateQsnPaperLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateQsnPaperLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "CreateQsnPaperLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "CreateTestLinkFunctionLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateTestLinkFunctionLambdaVersion48GG6KVHGwid4lBHX0114ArRd4E624UrQtceipLzY"
+        "Ref": "CreateTestLinkFunctionLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
+      }
+    },
+    "GetCandidateHomePageInfoLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetCandidateHomePageInfoLambdaVersionXVD9vWp9rZXo0A3gJX9lQ2YUzDxETX7VJwbPnDyc"
       }
     },
     "ServiceEndpoint": {

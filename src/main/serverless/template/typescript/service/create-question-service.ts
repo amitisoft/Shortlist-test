@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable, Observer} from 'rxjs';
 import {DynamoDB, SES} from "aws-sdk";
-import {Question} from '../domain/Question';
+import {Question} from '../domain/question';
 import { UUID } from 'angular2-uuid';
 
 const AWS = require('aws-sdk');
@@ -23,29 +23,51 @@ export class CreateQuestionServiceImpl {
     }
 
     create(data: any): Observable<Question> {
-        console.log("in CreateQuestionServiceImpl create()");
+        console.log("in CreateQuestionServiceImpl create()",typeof data);
         const documentClient = new DocumentClient();
+let params: any = {}; 
+  if(typeof data == "string"){
 
-        const params = {
+      data = JSON.parse(data);
+     params = {
             TableName: "question",
             Item: {
                 Qsn_id: uuid,
-                Qsn:data.Qsn,
-                Category: data.Category,
-                Option1:data.Option1,
-                Option2:data.Option2,
-                Option3:data.Option3,
-                Option4:data.Option4,
-                Crct_ans:data.Crct_ans,
+                Qsn:data["Qsn"],
+                Category: data["Category"],
+                Option1:data["Option1"],
+                Option2:data["Option2"],
+                Option3:data["Option3"],
+                Option4:data["Option4"],
+                Crct_ans:data["Crct_ans"],
                 Multi_flag:true
             }
 
         };
+  }else{
 
+   params = {
+            TableName: "question",
+            Item: {
+                Qsn_id: uuid,
+                Qsn:data["Qsn"],
+                Category: data["Category"],
+                Option1:data["Option1"],
+                Option2:data["Option2"],
+                Option3:data["Option3"],
+                Option4:data["Option4"],
+                Crct_ans:data["Crct_ans"],
+                Multi_flag:true
+            }
+
+        };
+        
+  }
+console.log("parammmmmmmmmmmmmmmmmmmm00000000000000------------",data["Qsn"]);
         return Observable.create((observer:Observer<Question>) => {
-             console.log(params);
+             console.log("param------------",params);
             documentClient.put(params, (err, data: any) => {
-                console.log(err);
+                console.log("eeeeeeeeeeeeee",err);
                 if(err) {
                     console.log("ifffffffffffffffffffffff");
                     if(err.code === 'ConditionalCheckFailedException'){
@@ -53,8 +75,10 @@ export class CreateQuestionServiceImpl {
                         return;
                     }
                 }
-                console.log("output ",data);
-                // observer.next(data.Item[0]);
+                
+                data = "success";
+               // console.log(data.Item[0]);
+                observer.next(data);
                 observer.complete();
             });
         });

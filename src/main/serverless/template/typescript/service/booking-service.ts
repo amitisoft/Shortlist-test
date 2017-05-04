@@ -4,6 +4,7 @@ import {Booking} from '../domain/booking';
 import {BookingDto} from "../dto/booking-dto"
 import {Candidate} from "../domain/candidate";
 import {DynamoDB, SES} from "aws-sdk";
+// import {}
 
 import DocumentClient = DynamoDB.DocumentClient;
 
@@ -23,6 +24,7 @@ export class BookingServiceImpl {
 
     /**
      * updateBookingAfterStartTest
+     * Hr click on starttest button
      * @param data 
      */
     updateBookingAfterStartTest(data: any): Observable<Booking> {
@@ -50,7 +52,7 @@ export class BookingServiceImpl {
                 ':ca': data.category,
                 ':jp': data.jobPostion,
                 ':DOE': data.DOE,
-                ':ts':data.testStatus,
+                ':ts':"progress",
                 ':pt':data.paperType,
                 ':cid':data.candidateId
             },
@@ -193,6 +195,94 @@ export class BookingServiceImpl {
     });
 }
 
+
+
+
+/**
+ * get data from uri, decode and send candidate information about test
+ * 
+ * test not taken ---- able to take test
+ * progress -----After clicking on start test
+ * test taken ---- after test completed
+ */
+
+getCandidateHomePageInfo(data:any):any{
+    let decodedData = JSON.parse(new Buffer(data.candidateinfo,'base64').toString('ascii'));
+
+     const queryParams: DynamoDB.Types.QueryInput = {
+        TableName: "booking",
+        KeyConditionExpression: "#bookingId = :bookingId",
+        ExpressionAttributeNames:{
+                 "#bookingId": "bookingId"
+             },
+        ExpressionAttributeValues : {
+            ":bookingId": decodedData.bookingId
+        },
+        ProjectionExpression : "candidateId, category,paperType,bookingId,testStatus",
+        ScanIndexForward : false
+    }
+
+    const documentClient = new DocumentClient();
+    return Observable.create((observer:Observer<Booking>) => {
+            documentClient.query(queryParams,(err,data:any) => {
+                if(err) {
+                    observer.error(err);
+                    throw err;
+                }
+                if(data.Items.length === 0) {
+                    observer.complete();
+                    return;
+                }
+                // check testStatus
+                console.log(data);
+                console.log("test status",data.Items[0].testStatus);
+                if(data.Items[0].testStatus === "progress") {
+                     observer.next((data.Items[0]));
+                     observer.complete();
+                }   
+                observer.error("contact our HR");
+                return;
+                });           
+            });
+}
+
+/**
+ *  checking candidate Token 
+ */
+candidateTokenChecking(data,pathParameter):any{
+     let decodedData = JSON.parse(new Buffer(pathParameter.candidateinfo,'base64').toString('ascii'));
+    const queryParams: DynamoDB.Types.QueryInput = {
+        TableName: "candidate",
+        KeyConditionExpression: "#candidateId = :candidateId",
+        ExpressionAttributeNames:{
+                 "#candidateId": "candidateId"
+             },
+        ExpressionAttributeValues : {
+            ":candidateId": data.candidateId//decodedData.token
+        },
+        ProjectionExpression : "candidateId, tokenId",
+        ScanIndexForward : false
+    }
+
+    const documentClient = new DocumentClient();
+    return Observable.create((observer:Observer<Booking>) => {
+            documentClient.query(queryParams,(err,data1:any) => {
+                if(err) {
+                    observer.error(err);
+                    throw err;
+                }
+                // check token
+                console.log("token data",data1.Items);
+                if(data1.Items[0].tokenId === decodedData.token) {
+                     observer.next((data));
+                      observer.complete();
+                      return;
+                } 
+                observer.error("Candidate token miss matched");
+                return "Candidate token miss matched";
+                });           
+            });
+}
 /**
  * ashok
  */
@@ -238,7 +328,7 @@ export class BookingServiceImpl {
                     observer.complete();
                     return;
                 }
-                   
+                   else{
                 var cate = reqdata.category;
                 console.log(cate);
               
@@ -297,7 +387,7 @@ export class BookingServiceImpl {
                 
                 observer.next(data.Items);
                 observer.complete();
-
+                   }
             });
         });
     }

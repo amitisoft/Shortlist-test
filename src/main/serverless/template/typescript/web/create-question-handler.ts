@@ -8,16 +8,12 @@ export class CreateQuestionHandler {
           console.log("CreateQuestionHandler");
         let body = httpContext.getRequestBody();
         console.log("pathParameters-----",body);
-       // body = JSON.parse(body);
         injector.get(CreateQuestionFacade).createQuestion(body)
             .subscribe(result => {
                 httpContext.ok(200, result);
             },  err => {
                 httpContext.fail(err, 500);
-        },
-         () => {
-                httpContext.ok(200);
-            });
+        });
     }
 
 static getQuestionByCategory(httpContext:HttpContextImpl,injector:Injector):void{
@@ -34,11 +30,7 @@ static getQuestionByCategory(httpContext:HttpContextImpl,injector:Injector):void
                 httpContext.ok(200, result);
             },  err => {
                 httpContext.fail(err, 500);
-            },
-            () => {
-                httpContext.ok(200);
-            }
-            );
+            });
 }
 
 }

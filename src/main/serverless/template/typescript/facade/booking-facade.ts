@@ -5,6 +5,7 @@ import { BookingDto } from '../dto/booking-dto';
 import { BookingsDto } from '../dto/bookings-dto';
 import { Booking } from '../domain/booking';
 
+
 @Injectable()
 export class BookingFacade {
 
@@ -47,6 +48,14 @@ export class BookingFacade {
                 candidateMailId:booking.email,
                 bookingId : booking.bookingId
             }
+    }
+
+    getCandidateHomePageInfo(data:any):any {
+        return this.bookingService.getCandidateHomePageInfo(data);
+    }
+
+    candidateTokenChecking(data:any,pathParameter:any): any{
+        return this.bookingService.candidateTokenChecking(data,pathParameter);
     }
 
 

@@ -10,5 +10,8 @@
        "candidateFullName": "Amiti7 lastName7",
        "candidateMailId": "amiti7@gmail.com",
        "bookingId": "7"
+    },
+    "pathParameters":{
+        "candidateinfo":"eyJib29raW5nSWQiOiIyIiwiZW1haWxJZCI6ImtpcmFuQGFtaXRpc29mdC5jb20iLCJ0b2tlbiI6IjEifQ=="
     }
 }
