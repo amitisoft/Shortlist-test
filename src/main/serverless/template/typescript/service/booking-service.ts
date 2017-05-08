@@ -96,7 +96,7 @@ export class BookingServiceImpl {
         ScanIndexForward : false
     }
     
-    if (lastEvaluatedKey){
+    if (lastEvaluatedKey.candidateId != undefined){
         console.log("-----------------------------with data-----------------------");
         console.log(" data-------------",lastEvaluatedKey.candidateId);
         queryParams.ExclusiveStartKey= { bookingId: lastEvaluatedKey.bookingId,
@@ -288,106 +288,116 @@ candidateTokenChecking(data,pathParameter):any{
  */
 
  // check Candidate ID exist or not in Booking table
-       findByCandidateId(candidateId:string,reqdata:any): Observable<Booking[]> {
-        console.log("in BookingServiceImpl findByCandidateId()");
-        const queryParams: DynamoDB.Types.QueryInput = {
-            TableName: "booking",
-            IndexName: "candidateIdGSI",
-            ProjectionExpression:"category,DOE,jobPosition,bookingId",
-            KeyConditionExpression: "#candidateId = :candidateIdFilter",
-            ExpressionAttributeNames: {
-                "#candidateId": "candidateId"
-            },
-            ExpressionAttributeValues: {
-                ":candidateIdFilter": candidateId
-            }
-        }
-        const documentClient = new DocumentClient();
-        return Observable.create((observer: Observer<Booking[]>) => {
-            console.log("Executing query with parameters " + queryParams);
-            documentClient.query(queryParams, (err, data: any) => {
-                console.log(`did we get error ${err}`);
-                if (err) {
-                    observer.error(err);
-                    throw err;
-                }
-                console.log(`data items receieved ${data.Items.length}`);
-                //CandidateId is not exist in the Booking Table consider as a frehser  then book the slot.
-                if (data.Items.length === 0) {
+      findByCandidateId(candidateId:string,reqdata:any):Observable<any> {
+          console.log("in BookingServiceImpl findByCandidateId()");
+                        const queryParams: DynamoDB.Types.QueryInput = {
+                        TableName: "booking",
+                        IndexName: "candidateIdGSI",
+                        ProjectionExpression:"category,dateofExam,jobPosition,bookingId,testStatus",
+                        KeyConditionExpression: "#candidateId = :candidateIdFilter",
+                                ExpressionAttributeNames: {
+                                                            "#candidateId": "candidateId"
+                                                            },
+                                ExpressionAttributeValues: {
+                                                            ":candidateIdFilter": candidateId
+                                                            }
+                                                                                    }
+                                const documentClient = new DocumentClient();
+                                return Observable.create((observer: Observer<any>) => {
+                                console.log("Executing query with parameters " + queryParams);
+                                            documentClient.query(queryParams, (err, data: any) => {
+                                                console.log(`did we get error ${err}`);
+                                                        if (err) {
+                                                                    observer.error(err);
+                                                                    throw err;
+                                                                }
+                                console.log(`data items receieved ${data.Items.length}`);
+               /**
+                 *  CandidateId is not exist in the Booking Table consider as a frehser  then book the slot.
+                 */
+    if (data.Items.length === 0)
+    {
                     console.log(` this candidateID  ${candidateId} is not Exist in the Booking Table  `); 
-                    let token = Math.random().toString(36).substr(2);
+                    let token = uuid.v4();
                     let bookingId = uuid.v4();
                     this.updateBookingInfo(bookingId,candidateId,token,reqdata.category,reqdata.jobPosition, reqdata.emails, reqdata.emailsubject, reqdata.emailbody)
                         .then(this.updateCandidateInfo.bind(this))
                         .then(this.sendEmail.bind(this))
                         .then(() => {
-                            console.log(" Success fully Sending mails");
-                        }, (rej) => {
+                            //console.log(" Success fully Sending mail");
+                             let msg=" Success fully Sending mail";
+                             observer.next(msg);
+                              observer.complete();
+                                  }, (rej) => {
                             console.log("rejected", rej);
                         });
-                    observer.complete();
-                    return;
-                }
-                   else{
-                var cate = reqdata.category;
+                                   
+                     return;
+    }
+    else
+    { 
+                let cate = reqdata.category;
                 console.log(cate);
-              
                 var sortingDatesArray = [];
+                console.log(data.Items);
                 for (var i = 0; i < data.Items.length; i++) {
-                    if (cate === data.Items[i].category)
+                    if (cate === data.Items[i].category && data.Items[i].testStatus === "taken")
                         {
-                        sortingDatesArray.push(data.Items[i].DOE); 
+                        sortingDatesArray.push(data.Items[i].dateofExam); 
                         }
                     }
                 
-                   if(sortingDatesArray.length ===0)
-                   {
-                    let token = Math.random().toString(36).substr(2);
+         if(sortingDatesArray.length ===0)
+           {
+                    let token = uuid.v4();
                     let bookingId = uuid.v4();
                     this.updateBookingInfo(bookingId, candidateId,token,reqdata.category, reqdata.jobPosition, reqdata.emails, reqdata.emailsubject, reqdata.emailbody)
                         .then(this.updateCandidateInfo.bind(this))
                         .then(this.sendEmail.bind(this))
                         .then(() => {
-                            console.log(" Success fully Sending mails");
+                             observer.next("Success fully Sending mail");
+                             observer.complete();
                         }, (rej) => {
                             console.log("rejected", rej);
                         });
-                       
-                   }
-                   else
-                   {
-                var srtarr = [];
-                for (var i = 0; i < sortingDatesArray.length; i++) {
-                    var df = sortingDatesArray[i].split('-'); 
-                    srtarr.push(Date.UTC(df[0], df[1] - 1, df[2]));// convert UTC format
-                }
-                srtarr.sort();// dates sorting 
-                var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-                var diffDays = Math.round(Math.abs((new Date(srtarr[i - 1]).getTime() - new Date().getTime()) / (oneDay)));
-                console.log(diffDays);
+                   return;      
+            }
+            else
+            {
+                             var srtarr = [];
+                             for (var i = 0; i < sortingDatesArray.length; i++) {
+                                    var df = sortingDatesArray[i].split('-'); 
+                                    srtarr.push(Date.UTC(df[0], df[1] - 1, df[2]));// convert UTC format
+                                                                                }
+                            srtarr.sort();// dates sorting 
+                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                            var diffDays = Math.round(Math.abs((new Date(srtarr[i - 1]).getTime() - new Date().getTime()) / (oneDay)));
+                            console.log(diffDays);
           
-            // validation of dates
-                if (30 < diffDays) {
-                    let token = Math.random().toString(36).substr(2);
-                    let bookingId = uuid.v4();
-                    //console.log(" allow");
-                    this.updateBookingInfo(bookingId, candidateId, token, reqdata.category, reqdata.jobPosition, reqdata.emails, reqdata.emailsubject, reqdata.emailbody)
+                            // validation of dates
+                                if (30 < diffDays) {
+                                                    let token = uuid.v4();
+                                                    let bookingId = uuid.v4();
+                         this.updateBookingInfo(bookingId, candidateId, token, reqdata.category, reqdata.jobPosition, reqdata.emails, reqdata.emailsubject, reqdata.emailbody)
                         .then(this.updateCandidateInfo.bind(this))
                         .then(this.sendEmail.bind(this))
                         .then(() => {
-                            console.log(" Success fully Sending mails");
+                            //console.log(" Success fully Sending mail");
+                              observer.next(" Success fully Sending mail");
+                              observer.complete();
                         }, (rej) => {
                             console.log("rejected", rej);
                         });
-                }
-                else {
-                    console.log("System does not allow with in 30 Days");
-                }
-            }
+                                                    }
+                                    else {
+                                       // console.log("System does not allow with in 30 Days");
+                                         observer.next("System does not allow with in 30 Days");
+                                         observer.complete();
+                                        }
+               }
+               
+              }    
                 
-                observer.next(data.Items);
-                observer.complete();
-                   }
             });
         });
     }
@@ -433,7 +443,7 @@ candidateTokenChecking(data,pathParameter):any{
         console.log(`data received jobPosition :${jobPosition}`);
         console.log(`data received bookingId :${bookingId}`);
 
-        let testStatus = "Nottaken";
+        let testStatus = "notTaken";
         const documentClient = new DocumentClient();
         const params = {
             TableName: "booking",
@@ -508,7 +518,7 @@ candidateTokenChecking(data,pathParameter):any{
 
                     Html: {
                         Data:body,
-                        // this.generateEmailTemplate("ashok@amitisoft.com", tokenid, body),
+                         // this.generateEmailTemplate("ashok@amitisoft.com", tokenid, body),
                         Charset: 'UTF-8'
                     }
                 },
@@ -517,9 +527,9 @@ candidateTokenChecking(data,pathParameter):any{
                     Charset: 'UTF-8'
                 }
             },
-            Source: 'kiran@amitisoft.com',
-            ReplyToAddresses: ['kiran@amitisoft.com'],
-            ReturnPath: 'kiran@amitisoft.com'
+            Source: 'ashok@amitisoft.com',
+            ReplyToAddresses: ['ashok@amitisoft.com'],
+            ReturnPath: 'ashok@amitisoft.com'
         }
         return params;
     }
@@ -545,7 +555,6 @@ candidateTokenChecking(data,pathParameter):any{
                                      <tr>
                                          <td align='center' valign='top' style='color:#337ab7;'>
                                              <h3>embody
-
                                              <a href="http://mail.amiti.in/verify.html?token=${tokenid}">http://mail.amiti.in/verify.html?token=${tokenid}</a>
                                              </h3>
                                          </td>
@@ -572,5 +581,6 @@ candidateTokenChecking(data,pathParameter):any{
          </html>
 `
     }
+
 
 }

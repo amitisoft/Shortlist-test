@@ -102,7 +102,7 @@ console.log("parammmmmmmmmmmmmmmmmmmm00000000000000------------",data["Qsn"]);
         }
 
 console.log(lastqsnid)     
-     if (lastqsnid){
+     if (lastqsnid != "null"){
         console.log("-----------------------------with data-----------------------");
         console.log(" data-------------",lastqsnid);
         queryParams.ExclusiveStartKey= { Qsn_id: lastqsnid,Category:categoryId}
