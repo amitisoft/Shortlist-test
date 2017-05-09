@@ -39,7 +39,7 @@ export class BookingFacade {
         return {
                 candidateId: booking.candidateId,
                 category: booking.category,
-                jobPostion: booking.jobPostion,
+                jobPosition: booking.jobPosition,
                 DOE: new Date().toDateString(),
                 testStatus: booking.testStatus,
                 startTime: 5,

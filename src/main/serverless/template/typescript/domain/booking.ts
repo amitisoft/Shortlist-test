@@ -1,7 +1,7 @@
 export class Booking {
     candidateId: string;
     category: string;
-    jobPostion: string;
+    jobPosition: string;
     DOE: string;
     testStatus: string;
     startTime: number;

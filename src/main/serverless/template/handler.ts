@@ -22,6 +22,7 @@ import { TestLinkHandler } from './typescript/web/test-link-handler';
 
  exports.startTestDashboard = ExecutionContextImpl.createHttpHandler(AppProviders, GetCandidateHandler.startTestDashboard);
 exports.getCandidateHomePageInfo = ExecutionContextImpl.createHttpHandler(AppProviders, GetCandidateHandler.getCandidateHomePageInfo);
+exports.updateBookingAfterStartTest = ExecutionContextImpl.createHttpHandler(AppProviders, GetCandidateHandler.updateBookingAfterStartTest);
 
 
 /**
@@ -41,4 +42,4 @@ exports.getQuestionByCategoryFunction = ExecutionContextImpl.createHttpHandler(A
  */
 
  exports.createTestLinkFunction = ExecutionContextImpl.createHttpHandler(AppProviders, TestLinkHandler.findCandidateByEmailId);
-
+ 

@@ -5,7 +5,7 @@ import {Question} from '../domain/question';
 import { UUID } from 'angular2-uuid';
 
 const AWS = require('aws-sdk');
-let uuid = UUID.UUID();
+let uuid = require('uuid');;
 
 //console.log("uuuuuuuuuuuuuuuuu",uuid);
 
@@ -27,7 +27,7 @@ export class createQuestionPaperserviceImpl {
 
 const qsnppr = [];
 let params:any = {};
-
+const uuidp = uuid.v4();
  if(typeof data == "string"){
     data = JSON.parse(data);
     for(var item=0;item<data.length;item++){
@@ -35,7 +35,7 @@ let params:any = {};
    let myObj = {
         PutRequest:{
                      Item:{
-                         "Qsn_Ppr_Id":uuid,
+                         "Qsn_Ppr_Id":uuidp,
                          "Qsn_Id":data[item].QsnId,
                          "Category":data[item].Category
                         }
@@ -56,7 +56,7 @@ for(var item=0;item<data.length;item++){
    let myObj = {
         PutRequest:{
                      Item:{
-                         "Qsn_Ppr_Id":uuid,
+                         "Qsn_Ppr_Id":uuidp,
                          "QsnId":data[item].QsnId,
                          "Category":data[item].Category
                         }

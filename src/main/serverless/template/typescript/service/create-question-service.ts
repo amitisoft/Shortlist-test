@@ -5,7 +5,7 @@ import {Question} from '../domain/question';
 import { UUID } from 'angular2-uuid';
 
 const AWS = require('aws-sdk');
-let uuid = UUID.UUID();
+let uuid = require('uuid');
 
 console.log("uuuuuuuuuuuuuuuuu",uuid);
 
@@ -26,13 +26,14 @@ export class CreateQuestionServiceImpl {
         console.log("in CreateQuestionServiceImpl create()",typeof data);
         const documentClient = new DocumentClient();
 let params: any = {}; 
+let uuiddp = uuid.v4()
   if(typeof data == "string"){
 
       data = JSON.parse(data);
      params = {
             TableName: "question",
             Item: {
-                Qsn_id: uuid,
+                Qsn_id: uuiddp,
                 Qsn:data["Qsn"],
                 Category: data["Category"],
                 Option1:data["Option1"],
@@ -49,7 +50,7 @@ let params: any = {};
    params = {
             TableName: "question",
             Item: {
-                Qsn_id: uuid,
+                Qsn_id: uuiddp,
                 Qsn:data["Qsn"],
                 Category: data["Category"],
                 Option1:data["Option1"],
@@ -98,7 +99,7 @@ console.log("parammmmmmmmmmmmmmmmmmmm00000000000000------------",data["Qsn"]);
             ExpressionAttributeValues: {
                 ":categoryIdFilter": categoryId
             },
-            Limit:2
+            Limit:5
         }
 
 console.log(lastqsnid)     

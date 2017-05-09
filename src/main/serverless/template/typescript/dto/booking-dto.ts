@@ -2,7 +2,7 @@ export class BookingDto {
     bookingId:string;
     candidateId: string;
     category: string;
-    jobPostion: string;
+    jobPosition: string;
     DOE: string;
     testStatus: string;
     startTime: number;

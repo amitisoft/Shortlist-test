@@ -50,10 +50,10 @@ export class BookingServiceImpl {
             },
             ExpressionAttributeValues: {
                 ':ca': data.category,
-                ':jp': data.jobPostion,
+                ':jp': data.jobPosition,
                 ':DOE': data.DOE,
                 ':ts':"progress",
-                ':pt':data.paperType,
+                ':pt':"a paper",
                 ':cid':data.candidateId
             },
             UpdateExpression: 'SET #ca = :ca,#jp=:jp, #DOE = :DOE, #ts= :ts, #pt =:pt, #cid=:cid',
@@ -85,20 +85,21 @@ export class BookingServiceImpl {
         TableName: "booking",
         IndexName: "testStatusGSI",
         KeyConditionExpression: "#testStatus = :v_test",
+        // FilterExpression: "#testStatus = NotTaken or #testStatus = progress",
         ExpressionAttributeNames:{
                  "#testStatus": "testStatus"
              },
         ExpressionAttributeValues : {
-            ":v_test": "test not taken"
+            ":v_test": "NotTaken"
         },
-        Limit: 2,
-        ProjectionExpression : "candidateId, category,testStatus,bookingId",
+        Limit: 30,
+        ProjectionExpression : "candidateId, category,testStatus,bookingId,jobPosition",
         ScanIndexForward : false
     }
-    
-    if (lastEvaluatedKey.candidateId != undefined){
+    lastEvaluatedKey = null;
+    if (lastEvaluatedKey != null){
         console.log("-----------------------------with data-----------------------");
-        console.log(" data-------------",lastEvaluatedKey.candidateId);
+        console.log(" data-------------",lastEvaluatedKey);
         queryParams.ExclusiveStartKey= { bookingId: lastEvaluatedKey.bookingId,
                                         testStatus: decodeURIComponent(lastEvaluatedKey.testStatus),
                                         candidateId: lastEvaluatedKey.candidateId }
@@ -173,7 +174,7 @@ export class BookingServiceImpl {
                             let newArray = res.filter((id)=>{ 
                                         return(id.candidateId === item.candidateId)});
                           //  console.log("new array", newArray[0]);
-                          //  console.log("item = ",item.candidateId);
+                            console.log("item = ",item);
                             // if (newArray != undefined){
                             let bookinginfo = new Booking();
                             bookinginfo.candidateId = item.candidateId;
@@ -183,8 +184,9 @@ export class BookingServiceImpl {
                             bookinginfo.category = item.category;
                             bookinginfo.fullName = `${newArray[0].firstName} ${newArray[0].lastName}`;
                             bookinginfo.email = newArray[0].email;
+                            bookinginfo.jobPosition = item.jobPosition;
                             resultArray.push(bookinginfo);
-                          //  console.log(" result", bookinginfo);
+                            console.log(" job Position ", item.jobPosition);
                     //     }
          
                     })
@@ -443,7 +445,7 @@ candidateTokenChecking(data,pathParameter):any{
         console.log(`data received jobPosition :${jobPosition}`);
         console.log(`data received bookingId :${bookingId}`);
 
-        let testStatus = "notTaken";
+        let testStatus = "NotTaken";
         const documentClient = new DocumentClient();
         const params = {
             TableName: "booking",
@@ -493,7 +495,7 @@ candidateTokenChecking(data,pathParameter):any{
                 return prom;
             }
           const emailParams: AWS.SES.SendEmailRequest = that.createEmailParamConfig(mydata.result.emailids, 
-                                                        mydata.result.emailsubject,mydata.result.emailbody,result.tokenid);
+                                                        mydata.result.emailsubject,mydata.result.emailbody,mydata.result.token);
             emailSES.sendEmail(emailParams,(err: any, data: AWS.SES.SendEmailResponse) => {
                 if (err) {
                     console.log(err);
@@ -517,8 +519,7 @@ candidateTokenChecking(data,pathParameter):any{
                 Body: {
 
                     Html: {
-                        Data:body,
-                         // this.generateEmailTemplate("ashok@amitisoft.com", tokenid, body),
+                        Data:this.generateEmailTemplate("ashok@amitisoft.com", tokenid, body),
                         Charset: 'UTF-8'
                     }
                 },
@@ -544,7 +545,12 @@ candidateTokenChecking(data,pathParameter):any{
              <title>title</title>
            </head>
            <body>
-                  
+           <font color="orange" size="3">
+               <pre>
+Dear Candidate,
+Amiti Welcome you to take exam as the first step in out recuritment/shortlist process.
+               </pre>  
+               </font>
             <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='bodyTable'>
              <tr>
                  <td align='center' valign='top'>
@@ -554,7 +560,7 @@ candidateTokenChecking(data,pathParameter):any{
                                  <table border='0' cellpadding='20' cellspacing='0' width='100%' id='emailBody'>
                                      <tr>
                                          <td align='center' valign='top' style='color:#337ab7;'>
-                                             <h3>embody
+                                             <h3> ${embody}:
                                              <a href="http://mail.amiti.in/verify.html?token=${tokenid}">http://mail.amiti.in/verify.html?token=${tokenid}</a>
                                              </h3>
                                          </td>
@@ -562,21 +568,25 @@ candidateTokenChecking(data,pathParameter):any{
                                  </table>
                              </td>
                          </tr>
-                         <tr style='background-color:#74a9d8;'>
-                             <td align='center' valign='top'>
-                                 <table border='0' cellpadding='20' cellspacing='0' width='100%' id='emailReply'>
-                                     <tr style='font-size: 1.2rem'>
-                                         <td align='center' valign='top'>
-                                             <span style='color:#286090; font-weight:bold;'>Send From:</span> <br/> ${emailFrom}
-                                         </td>
-                                     </tr>
-                                 </table>
+                         </table>
                              </td>
                          </tr>
                      </table>
                  </td>
              </tr>
              </table>
+             <pre>
+             <font color="orange" size="3">
+ Your will then be able to once take  the exam once the HR activates your individual exam.
+ Ensure that you read and understand the instrucitons carefully.
+ HR Will detail you on the next Steps.
+
+      ****************************** ALL the best  ******************************
+</font>
+Thanks,
+Amiti
+
+             </pre>
            </body>
          </html>
 `

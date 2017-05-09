@@ -12,14 +12,14 @@
 plugins:
   - serverless-webpack
 
-service: shortlist-template
+service: shortlist-test
 
 
 provider:
   name: aws
   stage: dev
   runtime: nodejs4.3
-  profile: shortlist-serverless-template-dev
+  profile: shortlist-serverless-test-dev
   environment:
     DYNAMODB_TABLE: "candidate"
     BOOKING_TABLE: "booking"
@@ -234,6 +234,15 @@ functions:
           method: get
           cors: true
 
+  updateBookingAfterStartTest:
+    handler: handler.updateBookingAfterStartTest
+    events:
+      - http:
+          path: api/updateBookingAfterStartTest
+          method: post
+         # authorizer: arn:aws:lambda:us-east-2:151610303354:function:hr-auth-master-dev-authorize
+          cors: true
+
 #   createTestLinkFunction:
 #     handler: handler.createTestLinkFunction
 #     events:
@@ -309,9 +318,9 @@ resources:
                     AttributeName: "candidateId"
                     KeyType: RANGE
                 Projection: 
-                  NonKeyAttributes: 
-                    - "category"
-                  ProjectionType: "INCLUDE"
+                  # NonKeyAttributes: 
+                  #   - "category,jobPosition"
+                  ProjectionType: "ALL"
                 ProvisionedThroughput: 
                   ReadCapacityUnits: "1"
                   WriteCapacityUnits: "1"
